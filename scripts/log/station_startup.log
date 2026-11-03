@@ -1,0 +1,22 @@
+[2026-10-08 17:15:54] [INFO] === Iniciando validações e inicialização da estação ===
+[2026-10-08 17:15:54] [ERRO] Dispositivo serial /dev/ttyUSB0 não foi encontrado! Cabo desconectado?
+[2026-10-08 17:15:54] [INFO] Binário rotctld encontrado em: /usr/bin/rotctld.
+[2026-10-08 17:15:54] [ERRO] Interpretador Python venv não encontrado em: /home/pi/Documents/satnogs-env/bin/python.
+[2026-10-08 17:15:54] [ERRO] Script do tracker não encontrado em: /home/pi/Documents/tracker.py.
+[2026-10-08 17:15:54] [AVISO] Inicialização do rotctld ignorada devido aos erros acima.
+[2026-10-08 17:15:54] [AVISO] Inicialização do Tracker Python ignorada devido aos erros acima.
+[2026-10-08 17:15:54] [INFO] === Resumo da inicialização concluído ===
+[2026-10-08 17:15:54] [AVISO] Nenhum processo em segundo plano foi iniciado com sucesso.
+[2026-10-08 17:15:54] [INFO] Rotina de encerramento chamada.
+[2026-10-08 17:15:54] [INFO] Processos encerrados.
+[2026-10-08 17:19:19] [INFO] === Iniciando validações e inicialização da estação ===
+[2026-10-08 17:19:19] [ERRO] Dispositivo serial /dev/ttyUSB0 não foi encontrado! Cabo desconectado?
+[2026-10-08 17:19:19] [INFO] Binário rotctld encontrado em: /usr/bin/rotctld.
+[2026-10-08 17:19:19] [ERRO] Interpretador Python venv não encontrado em: /home/pi/Documents/satnogs-env/bin/python.
+[2026-10-08 17:19:19] [ERRO] Script do tracker não encontrado em: /home/pi/Documents/tracker.py.
+[2026-10-08 17:19:19] [AVISO] Inicialização do rotctld ignorada devido aos erros acima.
+[2026-10-08 17:19:19] [AVISO] Inicialização do Tracker Python ignorada devido aos erros acima.
+[2026-10-08 17:19:19] [INFO] === Resumo da inicialização concluído ===
+[2026-10-08 17:19:19] [AVISO] Nenhum processo em segundo plano foi iniciado com sucesso.
+[2026-10-08 17:19:19] [INFO] Rotina de encerramento chamada.
+[2026-10-08 17:19:19] [INFO] Processos encerrados.

@@ -1,0 +1,10 @@
+[2026-10-08 17:02:28] ERRO: Arquivo do tracker não encontrado em: /home/pi/Documents/tracker.py
+[2026-10-08 17:02:28] ERRO: Interpretador Python não encontrado em: /home/pi/Documents/satnogs-env/bin/python
+[2026-10-08 17:02:28] ERRO: rotctld em 127.0.0.1:4533 não respondeu!
+[2026-10-08 17:02:28] ALERTA: Processo tracker.py está inativo.
+[2026-10-08 17:02:28] AVISO: O tracker não foi iniciado devido aos erros identificados acima.
+[2026-10-08 17:19:42] ERRO: Arquivo do tracker não encontrado em: /home/pi/Documents/tracker.py
+[2026-10-08 17:19:42] ERRO: Interpretador Python não encontrado em: /home/pi/Documents/satnogs-env/bin/python
+[2026-10-08 17:19:42] ERRO: rotctld em 127.0.0.1:4533 não respondeu!
+[2026-10-08 17:19:42] ALERTA: Processo tracker.py está inativo.
+[2026-10-08 17:19:42] AVISO: O tracker não foi iniciado devido aos erros identificados acima.

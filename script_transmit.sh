@@ -1,0 +1,9 @@
+PWD_SOURCE="./"
+
+USER_DESTINATION="nascerrgs"
+IP_DESTINATION="10.42.1.251"
+PWD_DESTINATION="/home/nascerrgs/GS"
+DESTINATION="$USER_DESTINATION@$IP_DESTINATION:$PWD_DESTINATION"
+
+
+scp -r  $PWD_SOURCE/{Class,satTracker,scripts,gs_executioner.cpp,Makefile,utils} $DESTINATION

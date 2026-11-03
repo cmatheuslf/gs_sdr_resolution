@@ -1,0 +1,24 @@
+[Unit]
+Description=Estacao SatNOGS (rotctld + tracker)
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/nascerrgs/GS
+ExecStart=/bin/bash /home/nascerrgs/GS/scripts/start_station.sh
+
+# Mantem o script rodando como processo principal
+Restart=always
+RestartSec=5s
+
+# Envia os sinais de término corretamente para o bash e seus subprocessos
+KillMode=mixed
+TimeoutStopSec=10s
+
+# Encaminha logs para o journalctl
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

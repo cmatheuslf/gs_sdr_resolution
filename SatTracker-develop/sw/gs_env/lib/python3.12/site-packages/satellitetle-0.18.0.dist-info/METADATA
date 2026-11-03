@@ -1,0 +1,115 @@
+Metadata-Version: 2.4
+Name: satellitetle
+Version: 0.18.0
+Summary: Fetch satellite TLEs from various online sources
+Home-page: https://gitlab.com/librespacefoundation/python-satellitetle
+Author: Fabian P. Schmidt
+Author-email: kerel-fs@gmx.de
+License: MIT
+Classifier: Programming Language :: Python :: 3
+License-File: LICENSE.txt
+License-File: AUTHORS
+Requires-Dist: requests
+Requires-Dist: sgp4~=2.25
+Requires-Dist: spacetrack~=1.4.0
+Requires-Dist: importlib-metadata; python_version < "3.13"
+Provides-Extra: dev
+Requires-Dist: flake8~=3.9.0; extra == "dev"
+Requires-Dist: tox~=4.12.1; extra == "dev"
+Dynamic: license-file
+
+============
+satellitetle
+============
+
+The python package satellitetle_ provides functions to fetch TLEs from various
+online sources (currently CelesTrak (SatNOGS), CalPoly and AMSAT) and allows
+using custom ones or Space-Track.org.
+
+It was forked from the python package orbit_.
+
+.. _satellitetle: https://gitlab.com/librespacefoundation/python-satellitetle
+.. _orbit: http://github.com/seanherron/orbit
+
+
+Usage
+-----
+
+Fetch TLEs for a single satellite from Celestrak:
+::
+
+ from satellite_tle import fetch_tle_from_celestrak
+
+ norad_id_iss = 25544 # ISS (ZARYA)
+ print(fetch_tle_from_celestrak(norad_id_iss))
+
+Fetch a large set of TLEs for a list of satllites from all available sources:
+::
+
+ from satellite_tle import fetch_all_tles, fetch_latest_tles
+ norad_ids = [25544, # ISS (ZARYA)
+              48274, # CSS (Tianhe)
+              40043] # TIGRISAT
+
+ # Uses default sources and compares TLE set from each source and
+ # returns the latest one for each satellite
+ tles = fetch_latest_tles(norad_ids)
+
+ for norad_id, (source, tle) in tles.items():
+     print('{:5d} {:23s}: {:23s}'.format(norad_id, tle[0], source))
+
+ # Uses default sources and returns the TLE sets from all source for
+ # each satellite
+ tles = fetch_all_tles(norad_ids)
+
+ for norad_id, tle_list in tles.items():
+     for source, tle in tle_list:
+         print('{:5d} {:23s}: {:23s}'.format(norad_id, tle[0], source))
+
+ # Defines custom sources
+ sources = [
+     ('CalPoly','http://mstl.atl.calpoly.edu/~ops/keps/kepler.txt'),
+     ('Celestrak (active)','https://celestrak.org/NORAD/elements/active.txt')
+ ]
+
+ # Uses custom sources (fetch_all_tles can also be used with the same
+ # parameters)
+ tles = fetch_latest_tles(norad_ids, sources=sources)
+
+ for norad_id, (source, tle) in tles.items():
+     print('{:5d} {:23s}: {:23s}'.format(norad_id, tle[0], source))
+
+ spacetrack_config= {
+     'identity': 'my_username',
+     'password': 'my_secret_password'
+ }
+
+ # Uses default sources and Space-Track.org (fetch_all_tles can also
+ # be used with the same parameters)
+ tles = fetch_latest_tles(norad_ids, spacetrack_config=spacetrack_config)
+
+ for norad_id, (source, tle) in tles.items():
+     print('{:5d} {:23s}: {:23s}'.format(norad_id, tle[0], source))
+
+ # Uses only Space-Track.org (fetch_all_tles can also be used with the
+ # same parameters)
+ tles = fetch_latest_tles(norad_ids, sources=[], spacetrack_config=spacetrack_config)
+
+ for norad_id, (source, tle) in tles.items():
+     print('{:5d} {:23s}: {:23s}'.format(norad_id, tle[0], source))
+
+ # Uses custom sources and Space-Track.org (fetch_all_tles can also be
+ # used with the same parameters)
+ tles = fetch_latest_tles(norad_ids, sources=sources, spacetrack_config=spacetrack_config)
+
+ for norad_id, (source, tle) in tles.items():
+     print('{:5d} {:23s}: {:23s}'.format(norad_id, tle[0], source))
+
+NOTE: `fetch_latest_tles` and `fetch_all_tles` download the TLE sets
+from all known sources, so they should only be used when fetching TLEs
+for a large set of satellites.
+
+License
+-------
+
+MIT
