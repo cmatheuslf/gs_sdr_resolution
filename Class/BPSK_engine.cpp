@@ -91,10 +91,20 @@ public:
     }
 };
 
+#include "BPSK_engine.hpp"
+
 BPSK_engine::BPSK_engine(uint32_t f, uint32_t sr, uint32_t br)
     : freq(f), sampleRate(sr), bitRate(br) {
-    costas = new CostasLoop(0.02f);
+    
+    // Cálculo de amostras por símbolo: 50.000 / 12.500 = 4.0
     float sps = static_cast<float>(sampleRate) / bitRate;
+    
+    // Geração dos coeficientes: 45 taps, alpha = 0.35, sps = 4.0, ganho = 1.0
+    int num_taps = 45;
+    float alpha = 0.35f;
+    rrc_taps = DSP::rrc(num_taps, alpha, sps, 1.0f);
+
+    costas = new CostasLoop(0.02f);
     timing_rec = new GardnerClockRecovery(sps, 0.01f);
 }
 
@@ -104,20 +114,23 @@ BPSK_engine::~BPSK_engine() {
 }
 
 std::vector<uint8_t> BPSK_engine::demodulate(const std::vector<std::complex<float>>& rx_iq) {
-    // 1. Rastreamento e remoção da portadora
-    std::vector<std::complex<float>> sync_iq = costas->process(rx_iq);
+    // 1. Filtragem Casada RRC (Limpeza de ruído e contenção de banda)
+    std::vector<std::complex<float>> filtered_iq = DSP::apply_fir(rx_iq, rrc_taps);
 
-    // 2. Extração do canal em fase (I)
+    // 2. Recuperação de portadora (Costas Loop) sobre o sinal filtrado
+    std::vector<std::complex<float>> sync_iq = costas->process(filtered_iq);
+
+    // 3. Extração da componente em fase (I)
     std::vector<float> i_channel;
     i_channel.reserve(sync_iq.size());
     for (const auto& s : sync_iq) {
         i_channel.push_back(s.real());
     }
 
-    // 3. Sincronização de símbolo
+    // 4. Recuperação de temporização (Gardner)
     std::vector<float> symbols = timing_rec->process(i_channel);
 
-    // 4. Decisão de bits
+    // 5. Decisão de bits
     std::vector<uint8_t> bits;
     bits.reserve(symbols.size());
     for (float s : symbols) {
@@ -125,4 +138,9 @@ std::vector<uint8_t> BPSK_engine::demodulate(const std::vector<std::complex<floa
     }
 
     return bits;
+}
+
+BPSK_engine::~BPSK_engine() {
+    delete costas;
+    delete timing_rec;
 }
